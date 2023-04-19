@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd 
 
 def clean_data(df):
-    # drop id columns
+    # Drop columns
     df.drop(columns=['id'], axis=1, inplace=True)
     
     # Fill missing values
@@ -53,5 +53,13 @@ def clean_data(df):
     age = df.age.values
     values = np.where(renovated <= 10, 1, 0)
     df['renovated'] = np.where(age <= 5, 1, values)
+
+    # Use qcut() function to categorize the 'price' column into three categories
+    df['price_categories'] = pd.qcut(df['price'], q=3, labels=['lowest', 'medium', 'highest'])
+
+    # 
+    #df['bathrooms'] = np.ceil(df['bathrooms']*2)/2
+    #df['bath_categories'] = pd.cut(df['bathrooms'], bins=[0, 1.5, 2.5, df['bathrooms'].max()], labels=['small', 'medium', 'large'])
+
   
     return df
